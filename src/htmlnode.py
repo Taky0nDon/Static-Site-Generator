@@ -1,4 +1,6 @@
 from __future__ import annotations
+
+
 class HTMLNode():
     def __init__(self,
                  tag: str=None,
@@ -32,3 +34,4 @@ class HTMLNode():
                 self.children == other.children,
                 self.props == other.props,
                 )
+

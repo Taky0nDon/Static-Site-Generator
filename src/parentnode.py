@@ -18,6 +18,8 @@ class ParentNode(HTMLNode):
             raise ValueError("ParentNode must have child nodes.")
         opening = f"<{self.tag}{self.props_to_html()}>"
         closing = f"</{self.tag}>"
-        children = "".join(c.to_html() for c in self.children)
-        return f"{opening}{children}{closing}"
+        children = ""
+        for child_node in self.children:
+            children += child_node.to_html()
+        return f"{opening}{children}{closing}\n"
 

@@ -1,36 +1,27 @@
+import os
+import shutil
+from time import sleep
+from pathlib import Path
+
+
 from textnode import TextNode, TextType
 from leafnode import LeafNode
-def main():
-    text_object = TextNode("this is some text",
-                           TextType.TEXT,
-                           "writethyself.net"
-                           )
-    print(text_object)
+from copy_to_public import copy_to_public
+from generate_page import generate_page
 
-def text_node_to_html_node(text_node: TextNode):
-    match text_node.text_type:
-        case TextType.TEXT:
-            return LeafNode(tag=None, value=text_node.text)
-        case TextType.BOLD:
-            return LeafNode(tag="b", value=text_node.text)
-        case TextType.ITALIC:
-            return LeafNode(tag="i", value=text_node.text)
-        case TextType.CODE:
-            return LeafNode(tag="code", value=text_node.text)
-        case TextType.LINK:
-            return LeafNode(tag="a",
-                            value=text_node.text,
-                            props={"href": text_node.url},
-                            )
-        case TextType.IMAGE:
-            return LeafNode(tag="img",
-                            value="",
-                            props={"src": text_node.url,
-                                   "alt": text_node.text,
-                                   },
-                            )
-        case _:
-            raise TypeError("TextNode's TextType is not supported.")
+PATH_PREFIX = Path("/home/mike/code/boot.dev/StaticSiteGenerator/Static-Site-Generator/")
+STATIC_PATH = PATH_PREFIX.joinpath("static")
+PUBLIC_PATH = PATH_PREFIX.joinpath("public")
+CONTENT_PATH = PATH_PREFIX.joinpath("content")
+
+def main():
+    copy_to_public(STATIC_PATH, PUBLIC_PATH)
+    generate_page(
+            CONTENT_PATH,
+            PATH_PREFIX.joinpath("template.html"),
+            PUBLIC_PATH
+            )
+
 
 
 main()

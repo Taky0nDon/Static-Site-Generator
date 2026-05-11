@@ -1,5 +1,3 @@
-
-
 from textnode import TextNode, TextType
 from extract_links import extract_markdown_images, extract_markdown_links
 
@@ -67,8 +65,16 @@ def split_nodes_image(old_nodes: list[TextNode]) -> list[TextNode]:
 def split_nodes_link(old_nodes: list[TextNode]) -> list[TextNode]:
     result = []
     for text_node in old_nodes:
+        if text_node.text_type != TextType.TEXT:
+            result.append(text_node)
+            continue
         links_and_urls = extract_markdown_links(text_node.text)[::-1]
+        if len(links_and_urls) < 1:
+            result.append(text_node)
+            continue
         parts = text_node.text.split("[")
+        if parts[0]:
+            result.append(TextNode(parts[0], TextType.TEXT))
         for part in parts[1:]:
             if "](" in part:
                 link_text, url = links_and_urls.pop()
