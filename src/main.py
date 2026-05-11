@@ -16,7 +16,7 @@ else:
     basepath = argv[1]
 PATH_PREFIX = Path("/home/mike/code/boot.dev/StaticSiteGenerator/Static-Site-Generator/")
 STATIC_PATH = PATH_PREFIX.joinpath("static")
-PUBLIC_PATH = PATH_PREFIX.joinpath("public")
+PUBLIC_PATH = PATH_PREFIX.joinpath("docs")
 CONTENT_PATH = PATH_PREFIX.joinpath("content")
 
 def main():
